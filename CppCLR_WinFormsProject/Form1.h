@@ -68,6 +68,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::ToolStripMenuItem^ binaryToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ continousToolStripMenuItem;
 	private: System::Windows::Forms::CheckBox^ normalizeData;
+	private: System::Windows::Forms::ToolStripMenuItem^ saveDataToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ loadDataToolStripMenuItem;
 
 
 
@@ -86,6 +88,12 @@ namespace CppCLRWinFormsProject {
 			this->initialToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->randomlyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->manuallyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->trainingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->binaryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->continousToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveDataToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->loadDataToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->checkClass1 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkClass2 = (gcnew System::Windows::Forms::CheckBox());
@@ -93,10 +101,6 @@ namespace CppCLRWinFormsProject {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->trainingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->binaryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->continousToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->normalizeData = (gcnew System::Windows::Forms::CheckBox());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -114,12 +118,12 @@ namespace CppCLRWinFormsProject {
 			// 
 			// processToolStripMenuItem
 			// 
-			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->initialToolStripMenuItem,
-					this->exitToolStripMenuItem, this->trainingToolStripMenuItem
+					this->exitToolStripMenuItem, this->trainingToolStripMenuItem, this->saveDataToolStripMenuItem, this->loadDataToolStripMenuItem
 			});
 			this->processToolStripMenuItem->Name = L"processToolStripMenuItem";
-			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 26);
+			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 24);
 			this->processToolStripMenuItem->Text = L"Process";
 			// 
 			// initialToolStripMenuItem
@@ -135,16 +139,60 @@ namespace CppCLRWinFormsProject {
 			// randomlyToolStripMenuItem
 			// 
 			this->randomlyToolStripMenuItem->Name = L"randomlyToolStripMenuItem";
-			this->randomlyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->randomlyToolStripMenuItem->Size = System::Drawing::Size(159, 26);
 			this->randomlyToolStripMenuItem->Text = L"Randomly";
 			this->randomlyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::randomlyToolStripMenuItem_Click);
 			// 
 			// manuallyToolStripMenuItem
 			// 
 			this->manuallyToolStripMenuItem->Name = L"manuallyToolStripMenuItem";
-			this->manuallyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->manuallyToolStripMenuItem->Size = System::Drawing::Size(159, 26);
 			this->manuallyToolStripMenuItem->Text = L"Manually";
 			this->manuallyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::manuallyToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->exitToolStripMenuItem->Text = L"Exit";
+			// 
+			// trainingToolStripMenuItem
+			// 
+			this->trainingToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->binaryToolStripMenuItem,
+					this->continousToolStripMenuItem
+			});
+			this->trainingToolStripMenuItem->Name = L"trainingToolStripMenuItem";
+			this->trainingToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->trainingToolStripMenuItem->Text = L"Training";
+			// 
+			// binaryToolStripMenuItem
+			// 
+			this->binaryToolStripMenuItem->Name = L"binaryToolStripMenuItem";
+			this->binaryToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->binaryToolStripMenuItem->Text = L"Binary";
+			this->binaryToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::binaryToolStripMenuItem_Click);
+			// 
+			// continousToolStripMenuItem
+			// 
+			this->continousToolStripMenuItem->Name = L"continousToolStripMenuItem";
+			this->continousToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->continousToolStripMenuItem->Text = L"Continous";
+			this->continousToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::continousToolStripMenuItem_Click);
+			// 
+			// saveDataToolStripMenuItem
+			// 
+			this->saveDataToolStripMenuItem->Name = L"saveDataToolStripMenuItem";
+			this->saveDataToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->saveDataToolStripMenuItem->Text = L"SaveData";
+			this->saveDataToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::saveDataToolStripMenuItem_Click);
+			// 
+			// loadDataToolStripMenuItem
+			// 
+			this->loadDataToolStripMenuItem->Name = L"loadDataToolStripMenuItem";
+			this->loadDataToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->loadDataToolStripMenuItem->Text = L"LoadData";
+			this->loadDataToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::loadDataToolStripMenuItem_Click);
 			// 
 			// pictureBox1
 			// 
@@ -195,7 +243,8 @@ namespace CppCLRWinFormsProject {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(44, 16);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"label2";// 
+			this->label2->Text = L"label2";
+			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
@@ -213,34 +262,7 @@ namespace CppCLRWinFormsProject {
 			this->label4->Size = System::Drawing::Size(44, 16);
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"label4";
-			// exitToolStripMenuItem
 			// 
-			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->exitToolStripMenuItem->Text = L"Exit";
-			// 
-			// trainingToolStripMenuItem
-			// 
-			this->trainingToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->binaryToolStripMenuItem,
-					this->continousToolStripMenuItem
-			});
-			this->trainingToolStripMenuItem->Name = L"trainingToolStripMenuItem";
-			this->trainingToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->trainingToolStripMenuItem->Text = L"Training";
-			// 
-			// binaryToolStripMenuItem
-			// 
-			this->binaryToolStripMenuItem->Name = L"binaryToolStripMenuItem";
-			this->binaryToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->binaryToolStripMenuItem->Text = L"Binary";
-			this->binaryToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::binaryToolStripMenuItem_Click);
-			// 
-			// continousToolStripMenuItem
-			// 
-			this->continousToolStripMenuItem->Name = L"continousToolStripMenuItem";
-			this->continousToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->continousToolStripMenuItem->Text = L"Continous";
 			// normalizeData
 			// 
 			this->normalizeData->AutoSize = true;
@@ -441,5 +463,115 @@ private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, Sy
 }
 private: System::Void binaryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void saveDataToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	SaveFileDialog^ saveFileDialog = gcnew SaveFileDialog();
+	saveFileDialog->Filter = "Text Files (*.txt)|*.txt";
+	saveFileDialog->Title = "Save Data File";
+
+	if (saveFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		System::IO::StreamWriter^ file = gcnew System::IO::StreamWriter(saveFileDialog->FileName);
+
+		for (int i = 0; i < Size; i++) {
+			file->WriteLine(p[i].x1 + "," + p[i].x2 + "," + p[i].id);
+		}
+
+		file->Close();
+		MessageBox::Show("Data successfully saved.");
+	}
+}
+
+private: System::Void loadDataToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	OpenFileDialog^ openFileDialog = gcnew OpenFileDialog();
+	openFileDialog->Filter = "Text Files (*.txt)|*.txt";
+	openFileDialog->Title = "Open Data File";
+
+	if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		System::IO::StreamReader^ file = gcnew System::IO::StreamReader(openFileDialog->FileName);
+
+		// Clear existing data
+		delete[] p;
+		p = nullptr;
+		Size = 0;
+		Size1 = 0;
+		Size2 = 0;
+
+		// Read lines from the file and add them to the data
+		while (!file->EndOfStream) {
+			String^ line = file->ReadLine();
+			array<String^>^ parts = line->Split(',');
+
+			double x1 = Convert::ToDouble(parts[0]);
+			double x2 = Convert::ToDouble(parts[1]);
+			int id = Convert::ToInt32(parts[2]);
+
+			// Allocate memory for new data points
+			Samples* temp = p;
+			Size++;
+			p = new Samples[Size];
+			for (int i = 0; i < Size - 1; i++) {
+				p[i] = temp[i];
+			}
+			p[Size - 1].x1 = x1;
+			p[Size - 1].x2 = x2;
+			p[Size - 1].id = id;
+
+			delete[] temp; // Free the old memory
+		}
+
+		file->Close();
+
+		// Update the UI with the loaded data
+		label2->Text = "Samples Total: " + Convert::ToString(Size) +
+			"  Class 1: " + Convert::ToString(Size1) +
+			"  Class 2: " + Convert::ToString(Size2);
+	}
+}
+
+private: System::Void continousToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (Size < 2) {
+		MessageBox::Show("Not enough samples to train.");
+		return;
+	}
+
+	double learning_rate = 0.1;
+	int max_epochs = 1000;
+	int Dim = 2;
+	w = new double[Dim + 1] { 0.0, 0.0, 0.0 };
+
+	for (int epoch = 0; epoch < max_epochs; epoch++) {
+		double total_error = 0.0;
+
+		for (int i = 0; i < Size; i++) {
+			double x1 = p[i].x1;
+			double x2 = p[i].x2;
+			int target = (p[i].id == CLASS1) ? 1 : -1;
+
+			// Calculate the output using the current weights
+			double output = w[0] * x1 + w[1] * x2 + w[2];
+
+			// Calculate error (target - output)
+			double error = target - output;
+
+			// Update weights using the delta rule
+			w[0] += learning_rate * error * x1;
+			w[1] += learning_rate * error * x2;
+			w[2] += learning_rate * error;
+
+			total_error += error * error; // Sum of squared errors for this epoch
+		}
+
+		// If the error is sufficiently small, stop early
+		if (total_error < 0.01) {
+			break;
+		}
+	}
+
+	// After training, update the GUI with the learned weights
+	label1->Text = System::String::Concat("Weights: w0 = ", System::Convert::ToString(w[0]),
+		" | w1 = ", System::Convert::ToString(w[1]),
+		" | w2 = ", System::Convert::ToString(w[2]));
+}
+
+
 };
 }
