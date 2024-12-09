@@ -4,6 +4,7 @@
 #include <time.h>
 #include <cstdlib>
 #include "Process.h"
+#include <array>
 
 namespace CppCLRWinFormsProject {
 
@@ -74,6 +75,26 @@ namespace CppCLRWinFormsProject {
 
 		/// </summary>
 		System::ComponentModel::Container^ components;
+		// Renk paleti tanımlayın
+		System::Drawing::Color GetColorForCycle(int cycle) {
+			// Palet olarak bir dizi tanımlayabiliriz
+			array<System::Drawing::Color>^ colors = gcnew array<System::Drawing::Color> {
+				System::Drawing::Color::Red,
+					System::Drawing::Color::Blue,
+					System::Drawing::Color::Green,
+					System::Drawing::Color::Orange,
+					System::Drawing::Color::Purple,
+					System::Drawing::Color::Brown,
+					System::Drawing::Color::Pink
+			};
+
+			// Döngü sayısına göre renk seç (paleti döngüsel kullan)
+			return colors[cycle % colors->Length];
+		}
+		void ClearGraphics() {
+			// `pictureBox1`'ın arka planını temizler
+			pictureBox1->Refresh();
+		}
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -400,6 +421,7 @@ private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, Sy
 
 	for (int epoch = 0; epoch < max_epochs; epoch++) {
 		bool updated = false;
+
 		for (int i = 0; i < Size; i++) {
 			// Örneklerin sınıfını kontrol et
 			double x1 = p[i].x1, x2 = p[i].x2;
@@ -417,32 +439,42 @@ private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, Sy
 				updated = true;
 			}
 		}
+
 		// Eğer güncelleme yapılmadıysa öğrenme tamamlandı
 		if (!updated) {
-			final_epoch = epoch + 1; // Hangi epoch'ta öğrenme tamamlandı
+			final_epoch = epoch + 1;
 			break;
 		}
+
+		// Eski çizgiyi sil
+		ClearGraphics();
+
+		// Ayrım çizgisini yeni renkle çiz
+		Pen^ pen = gcnew Pen(GetColorForCycle(epoch), 2.0f); // Renkli çizgi
+		int min_x = -pictureBox1->Width / 2;
+		int max_x = pictureBox1->Width / 2;
+
+		int min_y = YPoint(min_x, w);
+		int max_y = YPoint(max_x, w);
+
+		pictureBox1->CreateGraphics()->DrawLine(
+			pen,
+			(pictureBox1->Width / 2) + min_x, (pictureBox1->Height / 2) - min_y,
+			(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
+		);
+
+		// Epoch bilgilerini göster
+		label4->Text = "Epoch: " + Convert::ToString(epoch + 1);
 	}
 
-	// Ayrım çizgisini çiz
-	Pen^ pen = gcnew Pen(Color::Green, 3.0f);
-	int min_x = -pictureBox1->Width / 2;
-	int max_x = pictureBox1->Width / 2;
-
-	int min_y = YPoint(min_x, w);
-	int max_y = YPoint(max_x, w);
-
-	pictureBox1->CreateGraphics()->DrawLine(
-		pen,
-		(pictureBox1->Width / 2) + min_x, (pictureBox1->Height / 2) - min_y,
-		(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
-	);
-
-	label1->Text = System::String::Concat("Perceptron Weights: w0 = ", System::Convert::ToString(w[0]),
-		" | w1 = ", System::Convert::ToString(w[1]),
-		" | w2 = ", System::Convert::ToString(w[2]));
-	label4->Text = System::String::Concat("Cycle Count: ", final_epoch.ToString());
+	// Son ağırlıkları göster
+	label1->Text = System::String::Concat("Final Weights: w0 = ", Convert::ToString(w[0]),
+		" | w1 = ", Convert::ToString(w[1]),
+		" | w2 = ", Convert::ToString(w[2]));
+	label4->Text += " | Final Epoch Count: " + final_epoch.ToString();
 }
+
+
 
 private: System::Void binaryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 }
