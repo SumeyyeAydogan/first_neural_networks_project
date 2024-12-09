@@ -69,6 +69,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::ToolStripMenuItem^ continousToolStripMenuItem;
 	private: System::Windows::Forms::CheckBox^ normalizeData;
 	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::ToolStripMenuItem^ saveDataToolStripMenuItem;
 
 
 
@@ -92,8 +93,8 @@ namespace CppCLRWinFormsProject {
 			return colors[cycle % colors->Length];
 		}
 		void ClearGraphics() {
-			// `pictureBox1`'ın arka planını temizler
-			pictureBox1->Refresh();
+			// Burada sadece eski çizgiyi silin, veriler silinmesin
+			pictureBox1->CreateGraphics()->Clear(pictureBox1->BackColor);
 		}
 
 #pragma region Windows Form Designer generated code
@@ -108,18 +109,19 @@ namespace CppCLRWinFormsProject {
 			this->initialToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->randomlyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->manuallyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->trainingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->binaryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->continousToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->checkClass1 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkClass2 = (gcnew System::Windows::Forms::CheckBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->trainingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->binaryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->continousToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->normalizeData = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->saveDataToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -136,12 +138,12 @@ namespace CppCLRWinFormsProject {
 			// 
 			// processToolStripMenuItem
 			// 
-			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->initialToolStripMenuItem,
-					this->exitToolStripMenuItem, this->trainingToolStripMenuItem
+					this->exitToolStripMenuItem, this->trainingToolStripMenuItem, this->saveDataToolStripMenuItem
 			});
 			this->processToolStripMenuItem->Name = L"processToolStripMenuItem";
-			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 26);
+			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 24);
 			this->processToolStripMenuItem->Text = L"Process";
 			// 
 			// initialToolStripMenuItem
@@ -157,16 +159,45 @@ namespace CppCLRWinFormsProject {
 			// randomlyToolStripMenuItem
 			// 
 			this->randomlyToolStripMenuItem->Name = L"randomlyToolStripMenuItem";
-			this->randomlyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->randomlyToolStripMenuItem->Size = System::Drawing::Size(159, 26);
 			this->randomlyToolStripMenuItem->Text = L"Randomly";
 			this->randomlyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::randomlyToolStripMenuItem_Click);
 			// 
 			// manuallyToolStripMenuItem
 			// 
 			this->manuallyToolStripMenuItem->Name = L"manuallyToolStripMenuItem";
-			this->manuallyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->manuallyToolStripMenuItem->Size = System::Drawing::Size(159, 26);
 			this->manuallyToolStripMenuItem->Text = L"Manually";
 			this->manuallyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::manuallyToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->exitToolStripMenuItem->Text = L"Exit";
+			// 
+			// trainingToolStripMenuItem
+			// 
+			this->trainingToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->binaryToolStripMenuItem,
+					this->continousToolStripMenuItem
+			});
+			this->trainingToolStripMenuItem->Name = L"trainingToolStripMenuItem";
+			this->trainingToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->trainingToolStripMenuItem->Text = L"Training";
+			// 
+			// binaryToolStripMenuItem
+			// 
+			this->binaryToolStripMenuItem->Name = L"binaryToolStripMenuItem";
+			this->binaryToolStripMenuItem->Size = System::Drawing::Size(158, 26);
+			this->binaryToolStripMenuItem->Text = L"Binary";
+			this->binaryToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::binaryToolStripMenuItem_Click);
+			// 
+			// continousToolStripMenuItem
+			// 
+			this->continousToolStripMenuItem->Name = L"continousToolStripMenuItem";
+			this->continousToolStripMenuItem->Size = System::Drawing::Size(158, 26);
+			this->continousToolStripMenuItem->Text = L"Continous";
 			// 
 			// pictureBox1
 			// 
@@ -228,35 +259,6 @@ namespace CppCLRWinFormsProject {
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"label3";
 			// 
-			// exitToolStripMenuItem
-			// 
-			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->exitToolStripMenuItem->Text = L"Exit";
-			// 
-			// trainingToolStripMenuItem
-			// 
-			this->trainingToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->binaryToolStripMenuItem,
-					this->continousToolStripMenuItem
-			});
-			this->trainingToolStripMenuItem->Name = L"trainingToolStripMenuItem";
-			this->trainingToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->trainingToolStripMenuItem->Text = L"Training";
-			// 
-			// binaryToolStripMenuItem
-			// 
-			this->binaryToolStripMenuItem->Name = L"binaryToolStripMenuItem";
-			this->binaryToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->binaryToolStripMenuItem->Text = L"Binary";
-			this->binaryToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::binaryToolStripMenuItem_Click);
-			// 
-			// continousToolStripMenuItem
-			// 
-			this->continousToolStripMenuItem->Name = L"continousToolStripMenuItem";
-			this->continousToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->continousToolStripMenuItem->Text = L"Continous";
-			// 
 			// normalizeData
 			// 
 			this->normalizeData->AutoSize = true;
@@ -275,6 +277,13 @@ namespace CppCLRWinFormsProject {
 			this->label4->Size = System::Drawing::Size(44, 16);
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"label4";
+			// 
+			// saveDataToolStripMenuItem
+			// 
+			this->saveDataToolStripMenuItem->Name = L"saveDataToolStripMenuItem";
+			this->saveDataToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->saveDataToolStripMenuItem->Text = L"SaveData";
+			this->saveDataToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::saveDataToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -302,24 +311,63 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 	private: System::Void pictureBox1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		//Ana eksen dogrularini cizdir
+		// Ana eksen doğrularını çizdir
 		Pen^ pen = gcnew Pen(Color::Black, 3.0f);
 		int center_width, center_height;
 		center_width = (int)(pictureBox1->Width / 2);
 		center_height = (int)(pictureBox1->Height / 2);
 		e->Graphics->DrawLine(pen, center_width, 0, center_width, pictureBox1->Height);
 		e->Graphics->DrawLine(pen, 0, center_height, pictureBox1->Width, center_height);
+
+		// Çizilen noktalar ve karar sınırları burada çizilecek
+		if (Size > 0) {
+			Pen^ penClass1 = gcnew Pen(Color::Black, 3.0f); // Sınıf 1 için siyah
+			Pen^ penClass2 = gcnew Pen(Color::Red, 3.0f);   // Sınıf 2 için kırmızı
+
+			for (int i = 0; i < Size; i++) {
+				int x = Convert::ToInt32(p[i].x1 + (pictureBox1->Width / 2));
+				int y = Convert::ToInt32((pictureBox1->Height / 2) - p[i].x2);
+
+				// Sınıf 1 için siyah, sınıf 2 için kırmızı
+				if (p[i].id == CLASS1) {
+					e->Graphics->DrawLine(penClass1, x - 5, y, x + 5, y);
+					e->Graphics->DrawLine(penClass1, x, y - 5, x, y + 5);
+				}
+				else if (p[i].id == CLASS2) {
+					e->Graphics->DrawLine(penClass2, x - 5, y, x + 5, y);
+					e->Graphics->DrawLine(penClass2, x, y - 5, x, y + 5);
+				}
+			}
+
+			// Decision boundary çizimi (Perceptron sonrası çizgi)
+			if (w != nullptr) {
+				Pen^ penLine = gcnew Pen(Color::Green, 2.0f); // Karar sınırı için yeşil renk
+
+				// Çizim için 2 nokta alalım: min_x ve max_x
+				int min_x = (this->pictureBox1->Width) / -2;
+				int max_x = (this->pictureBox1->Width) / 2;
+
+				// w[0] * x1 + w[1] * x2 + w[2] = 0 denklemiyle y'yi hesapla
+				int min_y = YPoint(min_x, w);
+				int max_y = YPoint(max_x, w);
+
+				// Çizgiyi çiz
+				e->Graphics->DrawLine(penLine,
+					(pictureBox1->Width / 2) + min_x, (pictureBox1->Height / 2) - min_y,
+					(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
+				);
+			}
+		}
 	}
+
 	private: System::Void pictureBox1_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		if (checkClass1->Checked || checkClass2->Checked) {
-			if (checkClass1->Checked && checkClass2->Checked)
-			{
+			if (checkClass1->Checked && checkClass2->Checked) {
 				MessageBox::Show("Her iki sinif turu ayni anda secilemez!");
 				checkClass1->Checked = false;
 				checkClass2->Checked = false;
 			}
-			else
-			{
+			else {
 				// Hangi sınıfın seçili olduğunu belirle
 				int classId = checkClass1->Checked ? CLASS1 : CLASS2;
 				Pen^ pen = gcnew Pen(classId == CLASS1 ? Color::Black : Color::Red, 3.0f);
@@ -341,8 +389,7 @@ namespace CppCLRWinFormsProject {
 					p[0].x2 = x2;
 					p[0].id = classId;
 				}
-				else
-				{
+				else {
 					// Geçici bellek yönetimi
 					Samples* temp = p;
 					Size++; // Toplam boyutu artır
@@ -367,15 +414,15 @@ namespace CppCLRWinFormsProject {
 
 				// Koordinatları göster ve "+" çizin
 				label3->Text = "x1: " + Convert::ToString(p[Size - 1].x1) + " x2: " + Convert::ToString(p[Size - 1].x2);
-				pictureBox1->CreateGraphics()->DrawLine(pen, temp_x - 5, temp_y, temp_x + 5, temp_y);
-				pictureBox1->CreateGraphics()->DrawLine(pen, temp_x, temp_y - 5, temp_x, temp_y + 5);
 				label2->Text = "Samples Total: " + Convert::ToString(Size) +
 					"  Class 1: " + Convert::ToString(Size1) +
 					"  Class 2: " + Convert::ToString(Size2);
+
+				// Ekranı yenile ve yeni veriyi göster
+				pictureBox1->Invalidate(); // Ekranı yenileyerek tekrar çiz
 			}
 		}
-		else
-		{
+		else {
 			MessageBox::Show("Oncelikle orneklerin etiketini belirlemek icin sinif secin");
 		}
 	}//mouseClick
@@ -402,6 +449,8 @@ namespace CppCLRWinFormsProject {
 			(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
 		);
 	}
+
+	   // Perceptron işlemi (manuallyToolStripMenuItem_Click'teki)
 private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (Size < 2) {
 		MessageBox::Show("Sınıflar için yeterli örnek yok!");
@@ -440,34 +489,18 @@ private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, Sy
 			}
 		}
 
-		// Eğer güncelleme yapılmadıysa öğrenme tamamlandı
 		if (!updated) {
 			final_epoch = epoch + 1;
 			break;
 		}
 
-		// Eski çizgiyi sil
-		ClearGraphics();
+		// Ekranı yenileyin, çizgiyi yeniden çizin
+		pictureBox1->Invalidate(); // Yeni çizim yapılacak
 
-		// Ayrım çizgisini yeni renkle çiz
-		Pen^ pen = gcnew Pen(GetColorForCycle(epoch), 2.0f); // Renkli çizgi
-		int min_x = -pictureBox1->Width / 2;
-		int max_x = pictureBox1->Width / 2;
-
-		int min_y = YPoint(min_x, w);
-		int max_y = YPoint(max_x, w);
-
-		pictureBox1->CreateGraphics()->DrawLine(
-			pen,
-			(pictureBox1->Width / 2) + min_x, (pictureBox1->Height / 2) - min_y,
-			(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
-		);
-
-		// Epoch bilgilerini göster
 		label4->Text = "Epoch: " + Convert::ToString(epoch + 1);
 	}
 
-	// Son ağırlıkları göster
+	// Final ağırlıklarını göster
 	label1->Text = System::String::Concat("Final Weights: w0 = ", Convert::ToString(w[0]),
 		" | w1 = ", Convert::ToString(w[1]),
 		" | w2 = ", Convert::ToString(w[2]));
@@ -475,8 +508,25 @@ private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, Sy
 }
 
 
-
 private: System::Void binaryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void saveDataToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	SaveFileDialog^ saveFileDialog = gcnew SaveFileDialog();
+	saveFileDialog->Filter = "Text Files (*.txt)|*.txt";
+	saveFileDialog->Title = "Save Data File";
+
+	if (saveFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		System::IO::StreamWriter^ file = gcnew System::IO::StreamWriter(saveFileDialog->FileName);
+
+		for (int i = 0; i < Size; i++) {
+			file->WriteLine(p[i].x1 + "," + p[i].x2 + "," + p[i].id);  // Verileri doğru şekilde yazdır
+		}
+
+		file->Close();
+		MessageBox::Show("Data successfully saved.");
+	}
+}
+
+
 };
 }
