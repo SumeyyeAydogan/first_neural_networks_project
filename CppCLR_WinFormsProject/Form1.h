@@ -60,7 +60,14 @@ namespace CppCLRWinFormsProject {
 
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::ToolStripMenuItem^ perceptionToolStripMenuItem;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::ToolStripMenuItem^ manuallyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ exitToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ trainingToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ binaryToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ continousToolStripMenuItem;
+	private: System::Windows::Forms::CheckBox^ normalizeData;
 
 
 
@@ -78,12 +85,19 @@ namespace CppCLRWinFormsProject {
 			this->processToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->initialToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->randomlyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->manuallyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->checkClass1 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkClass2 = (gcnew System::Windows::Forms::CheckBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->perceptionToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->trainingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->binaryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->continousToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->normalizeData = (gcnew System::Windows::Forms::CheckBox());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -100,20 +114,23 @@ namespace CppCLRWinFormsProject {
 			// 
 			// processToolStripMenuItem
 			// 
-			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->initialToolStripMenuItem });
+			this->processToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->initialToolStripMenuItem,
+					this->exitToolStripMenuItem, this->trainingToolStripMenuItem
+			});
 			this->processToolStripMenuItem->Name = L"processToolStripMenuItem";
-			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 24);
+			this->processToolStripMenuItem->Size = System::Drawing::Size(72, 26);
 			this->processToolStripMenuItem->Text = L"Process";
 			// 
 			// initialToolStripMenuItem
 			// 
 			this->initialToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->randomlyToolStripMenuItem,
-					this->perceptionToolStripMenuItem
+					this->manuallyToolStripMenuItem
 			});
 			this->initialToolStripMenuItem->Name = L"initialToolStripMenuItem";
 			this->initialToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->initialToolStripMenuItem->Text = L"initial";
+			this->initialToolStripMenuItem->Text = L"Initializing";
 			// 
 			// randomlyToolStripMenuItem
 			// 
@@ -121,6 +138,13 @@ namespace CppCLRWinFormsProject {
 			this->randomlyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->randomlyToolStripMenuItem->Text = L"Randomly";
 			this->randomlyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::randomlyToolStripMenuItem_Click);
+			// 
+			// manuallyToolStripMenuItem
+			// 
+			this->manuallyToolStripMenuItem->Name = L"manuallyToolStripMenuItem";
+			this->manuallyToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->manuallyToolStripMenuItem->Text = L"Manually";
+			this->manuallyToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::manuallyToolStripMenuItem_Click);
 			// 
 			// pictureBox1
 			// 
@@ -158,7 +182,7 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(623, 187);
+			this->label1->Location = System::Drawing::Point(623, 239);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(44, 16);
 			this->label1->TabIndex = 4;
@@ -167,24 +191,74 @@ namespace CppCLRWinFormsProject {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(623, 231);
+			this->label2->Location = System::Drawing::Point(623, 280);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(44, 16);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"label2";
+			this->label2->Text = L"label2";// 
+			// label3
 			// 
-			// perceptionToolStripMenuItem
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(623, 318);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(44, 16);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L"label3";
 			// 
-			this->perceptionToolStripMenuItem->Name = L"perceptionToolStripMenuItem";
-			this->perceptionToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->perceptionToolStripMenuItem->Text = L"Perception";
-			this->perceptionToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::perceptronToolStripMenuItem_Click);
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(623, 369);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(44, 16);
+			this->label4->TabIndex = 7;
+			this->label4->Text = L"label4";
+			// exitToolStripMenuItem
+			// 
+			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->exitToolStripMenuItem->Text = L"Exit";
+			// 
+			// trainingToolStripMenuItem
+			// 
+			this->trainingToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->binaryToolStripMenuItem,
+					this->continousToolStripMenuItem
+			});
+			this->trainingToolStripMenuItem->Name = L"trainingToolStripMenuItem";
+			this->trainingToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->trainingToolStripMenuItem->Text = L"Training";
+			// 
+			// binaryToolStripMenuItem
+			// 
+			this->binaryToolStripMenuItem->Name = L"binaryToolStripMenuItem";
+			this->binaryToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->binaryToolStripMenuItem->Text = L"Binary";
+			this->binaryToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::binaryToolStripMenuItem_Click);
+			// 
+			// continousToolStripMenuItem
+			// 
+			this->continousToolStripMenuItem->Name = L"continousToolStripMenuItem";
+			this->continousToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->continousToolStripMenuItem->Text = L"Continous";
+			// normalizeData
+			// 
+			this->normalizeData->AutoSize = true;
+			this->normalizeData->Location = System::Drawing::Point(626, 183);
+			this->normalizeData->Name = L"normalizeData";
+			this->normalizeData->Size = System::Drawing::Size(122, 20);
+			this->normalizeData->TabIndex = 6;
+			this->normalizeData->Text = L"Normalize Data";
+			this->normalizeData->UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(757, 493);
+			this->Controls->Add(this->normalizeData);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->checkClass2);
@@ -267,7 +341,7 @@ namespace CppCLRWinFormsProject {
 				}
 
 				// Koordinatları göster ve "+" çizin
-				label1->Text = "x1: " + Convert::ToString(p[Size - 1].x1) + " x2: " + Convert::ToString(p[Size - 1].x2);
+				label3->Text = "x1: " + Convert::ToString(p[Size - 1].x1) + " x2: " + Convert::ToString(p[Size - 1].x2);
 				pictureBox1->CreateGraphics()->DrawLine(pen, temp_x - 5, temp_y, temp_x + 5, temp_y);
 				pictureBox1->CreateGraphics()->DrawLine(pen, temp_x, temp_y - 5, temp_x, temp_y + 5);
 				label2->Text = "Samples Total: " + Convert::ToString(Size) +
@@ -303,7 +377,7 @@ namespace CppCLRWinFormsProject {
 			(pictureBox1->Width / 2) + max_x, (pictureBox1->Height / 2) - max_y
 		);
 	}
-private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void manuallyToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (Size < 2) {
 		MessageBox::Show("Sınıflar için yeterli örnek yok!");
 		return;
@@ -317,6 +391,8 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 
 	// Ağırlıkları sıfırla
 	w = new double[Dim + 1] { 0.0, 0.0, 0.0 };
+
+	int final_epoch = 0; // Kaç cycle'da doğru ayrımı bulduğunu takip edin
 
 	for (int epoch = 0; epoch < max_epochs; epoch++) {
 		bool updated = false;
@@ -338,7 +414,10 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 			}
 		}
 		// Eğer güncelleme yapılmadıysa öğrenme tamamlandı
-		if (!updated) break;
+		if (!updated) {
+			final_epoch = epoch + 1; // Hangi epoch'ta öğrenme tamamlandı
+			break;
+		}
 	}
 
 	// Ayrım çizgisini çiz
@@ -358,7 +437,9 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 	label1->Text = System::String::Concat("Perceptron Weights: w0 = ", System::Convert::ToString(w[0]),
 		" | w1 = ", System::Convert::ToString(w[1]),
 		" | w2 = ", System::Convert::ToString(w[2]));
+	label4->Text = System::String::Concat("Cycle Count: ", final_epoch.ToString());
 }
-
+private: System::Void binaryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
