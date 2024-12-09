@@ -4,6 +4,8 @@
 #include <time.h>
 #include <cstdlib>
 #include "Process.h"
+//#include <System.Drawing.dll>
+
 
 namespace CppCLRWinFormsProject {
 
@@ -528,50 +530,86 @@ private: System::Void loadDataToolStripMenuItem_Click(System::Object^ sender, Sy
 }
 
 private: System::Void continousToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	// Eğitim için yeterli veri olup olmadığını kontrol et
 	if (Size < 2) {
-		MessageBox::Show("Not enough samples to train.");
+		MessageBox::Show("Eğitim için yeterli örnek yok.");
 		return;
 	}
 
-	double learning_rate = 0.1;
-	int max_epochs = 1000;
-	int Dim = 2;
-	w = new double[Dim + 1] { 0.0, 0.0, 0.0 };
+	double learning_rate = 0.1;  // Öğrenme oranı
+	int max_epochs = 1000;  // Maksimum eğitim döngüsü sayısı
+	int Dim = 2;  // Verinin boyutu (x1, x2)
+	w = new double[Dim + 1] { 0.0, 0.0, 0.0 };  // Ağırlıkların başlatılması (w0, w1, w2)
 
 	for (int epoch = 0; epoch < max_epochs; epoch++) {
-		double total_error = 0.0;
+		double total_error = 0.0;  // Toplam hata (squared error)
 
+		// Tüm eğitim örnekleri üzerinde döngü
 		for (int i = 0; i < Size; i++) {
-			double x1 = p[i].x1;
-			double x2 = p[i].x2;
-			int target = (p[i].id == CLASS1) ? 1 : -1;
+			double x1 = p[i].x1;  // Eğitim verisinin ilk özelliği
+			double x2 = p[i].x2;  // Eğitim verisinin ikinci özelliği
+			int target = (p[i].id == CLASS1) ? 1 : -1;  // Sınıf etiketine göre hedef değeri (1 ya da -1)
 
-			// Calculate the output using the current weights
+			// Çıktıyı hesapla: y = w0*x1 + w1*x2 + w2
 			double output = w[0] * x1 + w[1] * x2 + w[2];
 
-			// Calculate error (target - output)
+			// Hata hesapla: error = target - output
 			double error = target - output;
 
-			// Update weights using the delta rule
+			// Ağırlıkları güncelle: w = w + learning_rate * error * x
 			w[0] += learning_rate * error * x1;
 			w[1] += learning_rate * error * x2;
 			w[2] += learning_rate * error;
 
-			total_error += error * error; // Sum of squared errors for this epoch
+			// Hata miktarını biriktir
+			total_error += error * error;
 		}
 
-		// If the error is sufficiently small, stop early
+		// Eğer toplam hata küçükse (0.01), eğitimi erken bitir
 		if (total_error < 0.01) {
 			break;
 		}
 	}
 
-	// After training, update the GUI with the learned weights
-	label1->Text = System::String::Concat("Weights: w0 = ", System::Convert::ToString(w[0]),
+	// Modelin eğitildikten sonra öğrendiği ağırlıkları GUI'de göster
+	label1->Text = System::String::Concat("Ağırlıklar: w0 = ", System::Convert::ToString(w[0]),
 		" | w1 = ", System::Convert::ToString(w[1]),
 		" | w2 = ", System::Convert::ToString(w[2]));
+
+	// Modeli ve eğitim verilerini çizimle göster
+	drawModel();
 }
 
+	   // Bu fonksiyon çizim işlemi için kullanılacak
+private: void drawModel() {
+	// Grafik nesnesi oluştur (çizim için)
+	System::Drawing::Graphics^ g = this->CreateGraphics();
+
+	// Ekranda çizim yaparken kullanacağımız renkler
+	System::Drawing::Pen^ pen = gcnew System::Drawing::Pen(System::Drawing::Color::Blue);
+
+	// Eğitim verilerini çiz (x1, x2 noktaları)
+	for (int i = 0; i < Size; i++) {
+		double x1 = p[i].x1;
+		double x2 = p[i].x2;
+		int target = (p[i].id == CLASS1) ? 1 : -1;
+
+		// Sınıf 1 için kırmızı, sınıf 2 için yeşil noktalar
+		System::Drawing::Brush^ brush = (target == 1) ? gcnew System::Drawing::SolidBrush(System::Drawing::Color::Red) :
+			gcnew System::Drawing::SolidBrush(System::Drawing::Color::Green);
+
+		// Noktayı çiz
+		//g->FillEllipse(brush, (float)(x1 * 100), (float)(x2 * 100), 5, 5);  // Çizim ölçeği (100 ile çarpma)
+	}
+
+	// Sınıflayıcı doğrusu için çizim yapalım
+	// x1 ile x2 arasındaki doğrusal ilişkiyi çözebiliriz
+	double x1_min = -10, x1_max = 10;
+	double x2_min = -(w[0] * x1_min + w[2]) / w[1];
+	double x2_max = -(w[0] * x1_max + w[2]) / w[1];
+
+	g->DrawLine(pen, (float)(x1_min * 100), (float)(x2_min * 100), (float)(x1_max * 100), (float)(x2_max * 100));
+}
 
 };
 }
