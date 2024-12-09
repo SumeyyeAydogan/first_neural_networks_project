@@ -60,6 +60,7 @@ namespace CppCLRWinFormsProject {
 
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::ToolStripMenuItem^ perceptionToolStripMenuItem;
 
 
@@ -83,6 +84,7 @@ namespace CppCLRWinFormsProject {
 			this->checkClass2 = (gcnew System::Windows::Forms::CheckBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->perceptionToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -160,7 +162,7 @@ namespace CppCLRWinFormsProject {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(623, 187);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(44, 16);
+			this->label1->Size = System::Drawing::Size(74, 16);
 			this->label1->TabIndex = 4;
 			this->label1->Text = L"label1";
 			// 
@@ -169,9 +171,18 @@ namespace CppCLRWinFormsProject {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(623, 231);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(44, 16);
+			this->label2->Size = System::Drawing::Size(74, 16);
 			this->label2->TabIndex = 5;
 			this->label2->Text = L"label2";
+			//
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(623, 280);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(44, 16);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L"label3";
 			// 
 			// perceptionToolStripMenuItem
 			// 
@@ -187,6 +198,7 @@ namespace CppCLRWinFormsProject {
 			this->ClientSize = System::Drawing::Size(757, 493);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->checkClass2);
 			this->Controls->Add(this->checkClass1);
 			this->Controls->Add(this->pictureBox1);
@@ -318,6 +330,8 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 	// Ağırlıkları sıfırla
 	w = new double[Dim + 1] { 0.0, 0.0, 0.0 };
 
+	int final_epoch = 0; // Kaç cycle'da doğru ayrımı bulduğunu takip edin
+
 	for (int epoch = 0; epoch < max_epochs; epoch++) {
 		bool updated = false;
 		for (int i = 0; i < Size; i++) {
@@ -338,7 +352,10 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 			}
 		}
 		// Eğer güncelleme yapılmadıysa öğrenme tamamlandı
-		if (!updated) break;
+		if (!updated) {
+			final_epoch = epoch + 1; // Hangi epoch'ta öğrenme tamamlandı
+			break;
+		}
 	}
 
 	// Ayrım çizgisini çiz
@@ -358,6 +375,7 @@ private: System::Void perceptronToolStripMenuItem_Click(System::Object^ sender, 
 	label1->Text = System::String::Concat("Perceptron Weights: w0 = ", System::Convert::ToString(w[0]),
 		" | w1 = ", System::Convert::ToString(w[1]),
 		" | w2 = ", System::Convert::ToString(w[2]));
+	label3->Text = System::String::Concat("Cycle Count: ", final_epoch.ToString());
 }
 
 };
